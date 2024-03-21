@@ -6,8 +6,8 @@ import pandas as pd
 
 
 population ={}
-popsize = 5 #define size to which population is always trimmed
-generations = 3
+popsize = 15 #define size to which population is always trimmed
+generations = 12
 trials = 10
 k = 3 #define tournament size
 pm = 0.4 #probability of mutation
@@ -47,16 +47,20 @@ def initialize():
 def select_samples(size):
     # Selecting 3 random samples
     samples = list(population.keys())
+    selected_samples_matchup = [];
     # print("pop",population)
-    random_samples = random.sample(samples, size)
+    for _ in range(2):
+
+        random_samples = random.sample(samples, size)
     
     # Sorting the samples based on their values
-    sorted_samples = sorted(random_samples, key=lambda x: float(population[x]))
+        sorted_samples = sorted(random_samples, key=lambda x: float(population[x]))
     
-    # Selecting the 2 samples with the lowest values
-    selected_samples = sorted_samples[:2]
-    # print('rrr',sorted_samples)
-    return [(sample, population[sample]) for sample in selected_samples]
+    # Selecting the sample with the lowest values
+        selected_samples = sorted_samples[0]
+        selected_samples_matchup.append(selected_samples)
+    # returning the best sample out of two
+    return [(sample, population[sample]) for sample in selected_samples_matchup]
 
 
 
@@ -123,10 +127,10 @@ def GA():
             crossover_new()
         trim_pop2()
 
-    print("sorted",population,"sorted done");
+    # print("sorted",population,"sorted done");
     res_key = list(population.keys())[0]
     res_value = list(population.values())[0]
-    # print('iteration:', j,"best", next(iter(population.values())))
+    print('iteration:', j,"best", next(iter(population.values())))
 
     print("test",res_key, res_value)
 GA();
