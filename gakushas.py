@@ -44,7 +44,7 @@ def initialize():
     population.update(dict(zip(keys, values)))
     # print(list(solution_dict.items())[:2])
 
-def select_samples(size):
+def select_samples(size): # tournament part
     # Selecting 3 random samples
     samples = list(population.keys())
     selected_samples_matchup = [];
@@ -69,7 +69,7 @@ def get_fitness(child):
     return corresponding_value[0]
 
 
-def crossover_new():
+def crossover():
     # print("init:",population)
     data = select_samples(3)
     parents = [eval(t[0]) for t in data]
@@ -109,7 +109,7 @@ def crossover_new():
     population[str(c2)] = str(fitval_c2)
 
 
-def trim_pop2():
+def trim_pop():
     global population;
     sample_new = list(population.keys())
     
@@ -124,8 +124,8 @@ def GA():
     initialize()
     for j in range(generations):
         for i in range(popsize):
-            crossover_new()
-        trim_pop2()
+            crossover()
+        trim_pop()
 
     # print("sorted",population,"sorted done");
     res_key = list(population.keys())[0]
